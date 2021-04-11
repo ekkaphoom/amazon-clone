@@ -1,30 +1,42 @@
 import React from 'react'
 import './Header.css'
-import PropTypes from 'prop-types'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
+import { useStateValue } from './StateProvider';
+import { auth } from './firebase';
 
 const Header = props => {
+  const [state, dispatch] = useStateValue();
+  const { basket, user } = state;
+  const handleAuthentication = () => {
+    if (user) {
+      auth.signOut();
+    }
+    else {
+    }
+  }
+  console.log('user', user);
   return (
     <div className="header">
       <Link to="/">
-        <img src='./logo.png' className="header__logo" />
+        <img src='./logo.png' alt='img' className="header__logo" />
       </Link>
       <div className="header__search">
         <input className="header__searchInput" type="text" />
         <SearchIcon className="header__searchIcon" />
       </div>
       <div className="header__nav">
-        <div className="header__option">
-          <span className="header__optionLineOne">
-            Hello,Sign in
+        <Link to={!user && "/login"}>
+          <div onClick={handleAuthentication} className="header__option">
+            <span className="header__optionLineOne">
+              Hello Guest
            </span>
-          <span className="header__optionLineTwo">
-            Account
-          </span>
-        </div>
-
+            <span className="header__optionLineTwo">
+              {user ? 'Sign Out' : 'Sign In'}
+            </span>
+          </div>
+        </Link>
         <div className="header__option">
           <span className="header__optionLineOne">
             Returns
@@ -48,8 +60,8 @@ const Header = props => {
 
             <ShoppingBasketIcon />
             <span className="header__basketCount">
-              0
-          </span>
+              {basket?.length}
+            </span>
           </div>
         </Link>
       </div>
