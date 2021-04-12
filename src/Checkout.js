@@ -3,9 +3,10 @@ import Subtotal from './Subtotal'
 import './Checkout.css'
 import { useStateValue } from './StateProvider';
 import CheckoutProduct from './CheckoutProduct';
+import userEvent from '@testing-library/user-event';
 
 const Checkout = (props) => {
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
   const renderBasket = basket => (
     <p>
       {
@@ -33,6 +34,7 @@ const Checkout = (props) => {
       <div className="checkout__left">
         <div className="checkout__ad">Ads is here</div>
         <div>
+          <h3>Hello, {user?.email}</h3>
           <h2 className="checkout__title">Your Shopping Basket
           </h2>
           {renderBasket(basket)}
