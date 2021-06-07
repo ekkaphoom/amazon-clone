@@ -30,7 +30,7 @@ export default function CheckoutProduct(
         <div className="checkoutProduct__rating">
           {Array(rating).fill().map((_, i) => (<p>☆</p>))}
         </div>
-        <button onClick={removeFromBasket}  > Remove from Basket</button>
+        <button onClick={removeFromBasket} > Remove from Basket</button>
       </div>
 
     </div>
